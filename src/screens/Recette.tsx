@@ -8,37 +8,50 @@ const Recette = ({route}: any): JSX.Element => {
 
   console.log('----------------------------');
   console.log(item.title);
-  RestaurantService.getDetailRecette(item.id).then(value => {
-    modifDetail([]);
-    const tmpDetail: Step[] = [];
-    if(typeof value.data != 'undefined' && typeof value.data[0] !== 'undefined' && typeof value.data[0].steps !== 'undefined')
-    value.data[0].steps.forEach((oneStep: any) => {
-      let lengthStep: LengthStep = {
-        nombre: 0,
-        unite: '',
-      };
+  const fetchDetailRecette = async () => {
+    try {
+      const value = await RestaurantService.getDetailRecette(item.id);
+      const tmpDetail: Step[] = [];
       if (
-        typeof oneStep.length !== 'undefined' &&
-        typeof oneStep.length.number !== 'undefined' &&
-        oneStep.length.unit !== 'undefined'
+        typeof value.data !== 'undefined' &&
+        typeof value.data[0] !== 'undefined' &&
+        typeof value.data[0].steps !== 'undefined'
       ) {
-        lengthStep = {
-          nombre: oneStep.length.number,
-          unite: oneStep.length.unit,
-        };
-      }
+        value.data[0].steps.forEach((oneStep: any) => {
+          let lengthStep: LengthStep = {
+            nombre: 0,
+            unite: '',
+          };
+          if (
+            typeof oneStep.length !== 'undefined' &&
+            typeof oneStep.length.number !== 'undefined' &&
+            oneStep.length.unit !== 'undefined'
+          ) {
+            lengthStep = {
+              nombre: oneStep.length.number,
+              unite: oneStep.length.unit,
+            };
+          }
 
-      let createStep: Step = {
-        id: oneStep.number,
-        info: oneStep.step,
-        lengthStep: lengthStep,
-      };
-      tmpDetail.push(createStep);
-    });
-    modifDetail(tmpDetail);
+          let createStep: Step = {
+            id: oneStep.number,
+            info: oneStep.step,
+            lengthStep: lengthStep,
+          };
+          tmpDetail.push(createStep);
+        });
+      }
+      modifDetail(tmpDetail);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useState(() => {
+    fetchDetailRecette();
   });
 
-  if (!detailRecette) {
+  if (!detailRecette || detailRecette.length === 0) {
     return (
       <View style={styles.container}>
         <Text>Loading...</Text>
@@ -107,3 +120,7 @@ const styles = StyleSheet.create({
 });
 
 export default Recette;
+function useEffect(arg0: () => void) {
+  throw new Error('Function not implemented.');
+}
+

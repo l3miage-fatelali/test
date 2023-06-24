@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-const apiKey: string = 'fa0df6f31d8d485d8b26cd169ddd6de0';
-
+//const apiKey: string = 'fa0df6f31d8d485d8b26cd169ddd6de0';
 //const apiKey: string = '5596b56717c446f284e5a2aa1abca17d';
+const apiKey: string = '102773f1a871401783f9f91b5bf18915';
 
 export default class RestaurantService {
   static getRecettes(ingredient: string) {
