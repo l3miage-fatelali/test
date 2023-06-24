@@ -6,9 +6,12 @@ const Recette = ({route}: any): JSX.Element => {
   const {item} = route.params;
   const [detailRecette, modifDetail] = useState<Step[]>([]);
 
+  console.log('----------------------------');
+  console.log(item.title);
   RestaurantService.getDetailRecette(item.id).then(value => {
     modifDetail([]);
     const tmpDetail: Step[] = [];
+    if(typeof value.data != 'undefined' && typeof value.data[0] !== 'undefined' && typeof value.data[0].steps !== 'undefined')
     value.data[0].steps.forEach((oneStep: any) => {
       let lengthStep: LengthStep = {
         nombre: 0,

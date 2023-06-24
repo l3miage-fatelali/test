@@ -7,7 +7,7 @@ const RecettesRecentes = ({navigation}: PropsWithChildren<any>): JSX.Element => 
     let recetteRecherche = RecentService.getRecentRecipes();
     return (
       <View style={styles.recette}>
-        <ItemRecette recettes={recetteRecherche} navigation={navigation} />
+        <ItemRecette recettes={recetteRecherche} navigation={navigation} composant='recent'/>
       </View>
     );
   };

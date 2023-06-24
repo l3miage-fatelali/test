@@ -12,11 +12,15 @@ import RecentService from '../services/recentService';
 interface ItemRecetteProps {
   recettes: RecetteRecherche;
   navigation: any;
+  composant: string;
 }
 
-const ItemRecette = ({recettes, navigation}: ItemRecetteProps): JSX.Element => {
+const ItemRecette = ({recettes, navigation, composant}: ItemRecetteProps): JSX.Element => {
   const openRecette = (item: RecetteRecherche)=>{
-    RecentService.addRecentRecipe(item);
+    if(composant !== 'recent'){
+      RecentService.addRecentRecipe(item);
+    }
+    console.log('itemrecette');
     navigation.navigate('Recette', {item: item});
   }
   return (
@@ -50,7 +54,7 @@ const styles = StyleSheet.create({
   },
   flatList: {
     height: '100%',
-    padding: '20px',
+    //apadding: '20px',
   },
   container: {
     flex: 1,

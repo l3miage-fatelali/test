@@ -76,7 +76,7 @@ const Recherche = ({navigation}: PropsWithChildren<any>): JSX.Element => {
         <Text style={styles.buttonText}>Dernières recettes regardées</Text>
       </TouchableOpacity>
       <View style={styles.recette}>
-        <ItemRecette recettes={recetteRecherche} navigation={navigation} />
+        <ItemRecette recettes={recetteRecherche} navigation={navigation} composant='recherche'/>
       </View>
     </View>
   );

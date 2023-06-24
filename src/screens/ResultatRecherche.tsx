@@ -9,7 +9,7 @@ const ResultatRecherche = ({
   let recetteRecherche = RecentService.getRecentRecipes();
   return (
     <View style={styles.recette}>
-      <ItemRecette recettes={recetteRecherche} navigation={navigation} />
+      <ItemRecette recettes={recetteRecherche} navigation={navigation} composant='resultat'/>
     </View>
   );
 };
