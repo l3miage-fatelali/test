@@ -13,9 +13,11 @@ interface ItemRecetteProps {
   recettes: RecetteRecherche;
   navigation: any;
   composant: string;
+  etat: string;
 }
 
-const ItemRecette = ({recettes, navigation, composant}: ItemRecetteProps): JSX.Element => {
+const ItemRecette = ({recettes, navigation, composant, etat}: ItemRecetteProps): JSX.Element => {
+
   const openRecette = (item: RecetteRecherche)=>{
     if(composant !== 'recent'){
       RecentService.addRecentRecipe(item);
@@ -23,17 +25,18 @@ const ItemRecette = ({recettes, navigation, composant}: ItemRecetteProps): JSX.E
     console.log('itemrecette');
     navigation.navigate('Recette', {item: item});
   }
+  
   return (
-    <FlatList
+    <><h3>{etat}</h3><FlatList
       style={styles.flatList}
       data={recettes}
       keyExtractor={(recette: RecetteRecherche) => recette.id}
-      renderItem={({item}: RecetteRecherche) => {
+      renderItem={({ item }: RecetteRecherche) => {
         return (
           <TouchableOpacity onPress={() => openRecette(item)}>
             <View style={styles.container}>
               <View style={styles.cadre}>
-                <Image source={{uri: item.image}} style={styles.image} />
+                <Image source={{ uri: item.image }} style={styles.image} />
                 <View style={styles.texte}>
                   <Text>{item.title}</Text>
                 </View>
@@ -41,8 +44,7 @@ const ItemRecette = ({recettes, navigation, composant}: ItemRecetteProps): JSX.E
             </View>
           </TouchableOpacity>
         );
-      }}
-    />
+      } } /></>
   );
 };
 

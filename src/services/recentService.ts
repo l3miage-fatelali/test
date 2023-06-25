@@ -6,7 +6,18 @@ export default class RecentService {
   }
 
   static addRecentRecipe(recipe: RecetteRecherche) {
-    RecentService.recentRecipes.unshift(recipe);
+    let trouver = false;
+    let i = 0;
+    while(i < this.recentRecipes.length && !trouver){
+      
+      if(this.recentRecipes[i]['id'] === recipe['id']){
+        trouver = true;
+      }
+      i++;
+    }
+    if(!trouver){
+      RecentService.recentRecipes.unshift(recipe);
+    }
   }
 
   static clearRecentRecipes() {

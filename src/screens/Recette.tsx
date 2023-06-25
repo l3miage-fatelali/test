@@ -54,7 +54,7 @@ const Recette = ({route}: any): JSX.Element => {
   if (!detailRecette || detailRecette.length === 0) {
     return (
       <View style={styles.container}>
-        <Text>Loading...</Text>
+        <Text>Sorry, we don't have the steps for this recipe.</Text>
       </View>
     );
   }

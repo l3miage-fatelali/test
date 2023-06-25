@@ -12,11 +12,17 @@ import RestaurantService from '../services/restaurantService';
 import ItemRecette from './ItemRecette';
 import RecentService from '../services/recentService';
 
-const Recherche = ({navigation}: PropsWithChildren<any>): JSX.Element => {
+interface RechercheProps {
+  recettes: RecetteRecherche[];
+  navigation: any;
+}
+
+const Recherche = ({recettes, navigation}: RechercheProps): JSX.Element => {
   RecentService.clearRecentRecipes();
 
   const [ingredient, setIngredient] = useState('');
-  const [recetteRecherche, setRecetteRecherche] = useState([]);
+  const [recetteRecherche, setRecetteRecherche] = useState(recettes);
+  const [etat, setEtat] = useState('Aleatoire');
 
   const search = async () => {
     setRecetteRecherche([]);
@@ -28,28 +34,10 @@ const Recherche = ({navigation}: PropsWithChildren<any>): JSX.Element => {
         id: recette.id,
         image: recette.image,
         title: recette.title,
-        ingredients: [],
       };
-
-      recette.missedIngredients.forEach((unIngredient: any) => {
-        let unIngredientF: Ingredient = {
-          id: unIngredient.id,
-          name: unIngredient.name,
-          image: unIngredient.image,
-        };
-        recetteFinal.ingredients.push(unIngredientF);
-      });
-
-      recette.usedIngredients.forEach((unIngredient: any) => {
-        let unIngredientF: Ingredient = {
-          id: unIngredient.id,
-          name: unIngredient.name,
-          image: unIngredient.image,
-        };
-        recetteFinal.ingredients.push(unIngredientF);
-      });
       recettetmp.push(recetteFinal);
     });
+    setEtat('Resultat');
     setRecetteRecherche(recettetmp);
   };
 
@@ -76,7 +64,7 @@ const Recherche = ({navigation}: PropsWithChildren<any>): JSX.Element => {
         <Text style={styles.buttonText}>Dernières recettes regardées</Text>
       </TouchableOpacity>
       <View style={styles.recette}>
-        <ItemRecette recettes={recetteRecherche} navigation={navigation} composant='recherche'/>
+      <ItemRecette recettes={recetteRecherche} navigation={navigation} composant='recherche' etat={etat}/>
       </View>
     </View>
   );
