@@ -1,13 +1,11 @@
 import React, {useState} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {FlatList, Image, StyleSheet, Text, View} from 'react-native';
 import RestaurantService from '../services/restaurantService';
 
 const Recette = ({route}: any): JSX.Element => {
   const {item} = route.params;
   const [detailRecette, modifDetail] = useState<Step[]>([]);
 
-  console.log('----------------------------');
-  console.log(item.title);
   const fetchDetailRecette = async () => {
     try {
       const value = await RestaurantService.getDetailRecette(item.id);
@@ -61,27 +59,46 @@ const Recette = ({route}: any): JSX.Element => {
 
   return (
     <View style={styles.container}>
-      <Text>{item.title}</Text>
-      <Text style={styles.subtitle}>Les étapes :</Text>
-      <View style={styles.instructionsContainer}>
-        {detailRecette.map((instruction, index) => (
-          <View key={index} style={styles.instruction}>
+      <Text style={styles.title}>{item.title}</Text>
+      <View style={styles.imageContainer}>
+        <Image source={{uri: item.image}} style={styles.image} />
+      </View>
+      <Text style={styles.subtitle}>{'\n'}Steps :</Text>
+      <FlatList
+        data={detailRecette}
+        keyExtractor={(item, index) => index.toString()}
+        renderItem={({ item }) => (
+          <View style={styles.instruction}>
             <Text style={styles.bullet}>•</Text>
             <View style={styles.instructionContent}>
-              <Text style={styles.instructionTitle}>{instruction.info}</Text>
+              <Text style={styles.instructionTitle}>{item.info}</Text>
               <Text style={styles.instructionDuration}>
-                Durée : {instruction.lengthStep.nombre}{' '}
-                {instruction.lengthStep.unite}
+                Duration: {item.lengthStep.nombre} {item.lengthStep.unite}
               </Text>
             </View>
           </View>
-        ))}
-      </View>
+        )}
+      />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  image: {
+    width: 150,
+    height: 100,
+    margin: 5,
+  },
+  imageContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: 'black',
+    textAlign: 'center',
+  },
   container: {
     flex: 1,
     padding: 16,
@@ -123,4 +140,3 @@ export default Recette;
 function useEffect(arg0: () => void) {
   throw new Error('Function not implemented.');
 }
-

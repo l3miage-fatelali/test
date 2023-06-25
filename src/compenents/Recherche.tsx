@@ -1,4 +1,4 @@
-import React, {PropsWithChildren, useState} from 'react';
+import React, { useState} from 'react';
 import {
   Image,
   Pressable,
@@ -53,15 +53,15 @@ const Recherche = ({recettes, navigation}: RechercheProps): JSX.Element => {
           style={styles.icon}></Image>
         <TextInput
           style={styles.input}
-          placeholder="Entrez un ingredient en anglais"
+          placeholder="Please enter an ingredient"
           onChangeText={ingredient => setIngredient(ingredient)}
         />
       </View>
       <Pressable style={styles.buttonRechercher} onPress={() => search()}>
-        <Text style={styles.buttonText}>Rechercher</Text>
+        <Text style={styles.buttonText}>Search</Text>
       </Pressable>
       <TouchableOpacity onPress={handlePress} style={styles.button}>
-        <Text style={styles.buttonText}>Dernières recettes regardées</Text>
+        <Text style={styles.buttonText}>Recently Viewed Recipes</Text>
       </TouchableOpacity>
       <View style={styles.recette}>
       <ItemRecette recettes={recetteRecherche} navigation={navigation} composant='recherche' etat={etat}/>

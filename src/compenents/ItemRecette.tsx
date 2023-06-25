@@ -16,35 +16,41 @@ interface ItemRecetteProps {
   etat: string;
 }
 
-const ItemRecette = ({recettes, navigation, composant, etat}: ItemRecetteProps): JSX.Element => {
-
-  const openRecette = (item: RecetteRecherche)=>{
-    if(composant !== 'recent'){
+const ItemRecette = ({
+  recettes,
+  navigation,
+  composant,
+  etat,
+}: ItemRecetteProps): JSX.Element => {
+  const openRecette = (item: RecetteRecherche) => {
+    if (composant !== 'recent') {
       RecentService.addRecentRecipe(item);
     }
-    console.log('itemrecette');
     navigation.navigate('Recette', {item: item});
-  }
-  
+  };
+
   return (
-    <><h3>{etat}</h3><FlatList
-      style={styles.flatList}
-      data={recettes}
-      keyExtractor={(recette: RecetteRecherche) => recette.id}
-      renderItem={({ item }: RecetteRecherche) => {
-        return (
-          <TouchableOpacity onPress={() => openRecette(item)}>
-            <View style={styles.container}>
-              <View style={styles.cadre}>
-                <Image source={{ uri: item.image }} style={styles.image} />
-                <View style={styles.texte}>
-                  <Text>{item.title}</Text>
+    <View>
+      <FlatList
+        style={styles.flatList}
+        data={recettes}
+        keyExtractor={(recette: RecetteRecherche) => recette.id}
+        renderItem={({item}: RecetteRecherche) => {
+          return (
+            <TouchableOpacity onPress={() => openRecette(item)}>
+              <View style={styles.container}>
+                <View style={styles.cadre}>
+                  <Image source={{uri: item.image}} style={styles.image} />
+                  <View style={styles.texte}>
+                    <Text>{item.title}</Text>
+                  </View>
                 </View>
               </View>
-            </View>
-          </TouchableOpacity>
-        );
-      } } /></>
+            </TouchableOpacity>
+          );
+        }}
+      />
+    </View>
   );
 };
 
@@ -56,7 +62,6 @@ const styles = StyleSheet.create({
   },
   flatList: {
     height: '100%',
-    //apadding: '20px',
   },
   container: {
     flex: 1,
