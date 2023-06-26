@@ -18,8 +18,6 @@ interface RechercheProps {
 }
 
 const Recherche = ({recettes, navigation}: RechercheProps): JSX.Element => {
-  RecentService.clearRecentRecipes();
-
   const [ingredient, setIngredient] = useState('');
   const [recetteRecherche, setRecetteRecherche] = useState(recettes);
   const [etat, setEtat] = useState('Aleatoire');

@@ -19,8 +19,4 @@ export default class RecentService {
       RecentService.recentRecipes.unshift(recipe);
     }
   }
-
-  static clearRecentRecipes() {
-    RecentService.recentRecipes = [];
-  }
 }
